@@ -3,12 +3,10 @@ var memdb = require('memdb')
 var hdata = require('../')
 var fs = require('fs')
 
-var file = '/tmp/log.data'
 var log = hyperlog(memdb())
-
 log.createReadStream({ live: true })
   .pipe(hdata.save())
-  .pipe(fs.createWriteStream(file))
+  .pipe(fs.createWriteStream('/tmp/log.data'))
 
 var data = {
   A: { links: [], data: 'hello' },
