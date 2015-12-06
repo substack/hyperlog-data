@@ -1,18 +1,14 @@
 var hyperlog = require('hyperlog')
 var memdb = require('memdb')
-var serialize = require('../')
+var hdata = require('../')
 var fs = require('fs')
 
 var file = '/tmp/log.data'
 var log = hyperlog(memdb())
-fs.stat(file, function (err, stat) {
-  log.createReadStream({ live: true })
-    .pipe(serialize())
-    .pipe(fs.createWriteStream(file, {
-      flags: 'a+',
-      start: (stat || {}).size
-    }))
-})
+
+log.createReadStream({ live: true })
+  .pipe(hdata.save())
+  .pipe(fs.createWriteStream(file))
 
 var data = {
   A: { links: [], data: 'hello' },
