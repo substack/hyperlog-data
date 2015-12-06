@@ -20,6 +20,7 @@
   "dependencies": {
     "hyperlog": "^4.7.0",
     "length-prefixed-stream": "^1.4.0",
+    "readable-stream": "^2.0.4",
     "stream-combiner2": "^1.1.1",
     "through2": "^2.0.0"
   }

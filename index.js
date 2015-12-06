@@ -2,6 +2,7 @@ var through = require('through2')
 var lenpre = require('length-prefixed-stream')
 var combine = require('stream-combiner2')
 var messages = require('hyperlog/lib/messages.js')
+var Writable = require('readable-stream').Writable
 
 exports.save = function () {
   return combine.obj([ through.obj(write), lenpre.encode() ])
@@ -13,15 +14,22 @@ exports.save = function () {
   }
 }
 
-exports.load = function (log) {
+exports.load = function (log, cb) {
   var decode = lenpre.decode()
-  decode.pipe(through.obj(write))
-    .on('error', function (err) { decode.emit('error', err) })
+  decode.pipe(through.obj(write, end))
+    .on('error', function (err) {
+      if (cb) cb(err)
+      else decode.emit('error', err)
+    })
   return decode
 
   function write (buf, enc, next) {
     try { var row = messages.Node.decode(buf) }
     catch (err) { return next(err) }
-    log.add(row.links, row.value, function (err) { next(err) })
+    log.add(row.links, row.value, row, function (err) { next(err) })
+  }
+  function end () {
+    decode.emit('end')
+    if (cb) cb(null)
   }
 }

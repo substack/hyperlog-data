@@ -10,7 +10,7 @@ var collect = require('collect-stream')
 var tmpfile = path.join(tmpdir, 'hyperlog-data-test-' + Math.random())
 
 test('data', function (t) {
-  t.plan(2)
+  t.plan(3)
   var log0 = hyperlog(memdb())
 
   var data = {
@@ -42,14 +42,15 @@ test('data', function (t) {
   function load () {
     var log1 = hyperlog(memdb())
     fs.createReadStream(tmpfile)
-      .pipe(hdata.load(log1))
-      .once('finish', function () {
+      .pipe(hdata.load(log1, function (err) {
+        t.ifError(err)
         collect(log1.createReadStream(), compare)
-      })
+      }))
+
     function compare (err, rows) {
       t.ifError(err)
       t.deepEqual(
-        rows.map(function (row) { return row.value }),
+        rows.map(function (row) { return row.value.toString() }),
         [ 'hello', 'world', 'zzz', 'zing' ]
       )
     }
