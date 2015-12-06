@@ -2,7 +2,6 @@ var through = require('through2')
 var lenpre = require('length-prefixed-stream')
 var combine = require('stream-combiner2')
 var messages = require('hyperlog/lib/messages.js')
-var Writable = require('readable-stream').Writable
 
 exports.save = function () {
   return combine.obj([ through.obj(write), lenpre.encode() ])
