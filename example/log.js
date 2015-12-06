@@ -3,12 +3,13 @@ var memdb = require('memdb')
 var serialize = require('../')
 var fs = require('fs')
 
+var file = '/tmp/log.data'
 var log = hyperlog(memdb())
-fs.stat('/tmp/log.data', function (err, stat) {
+fs.stat(file, function (err, stat) {
   log.createReadStream({ live: true })
     .pipe(serialize())
-    .pipe(fs.createWriteStream({
-      flags: 'r+',
+    .pipe(fs.createWriteStream(file, {
+      flags: 'a+',
       start: (stat || {}).size
     }))
 })
@@ -20,11 +21,14 @@ var data = {
   D: { links: ['B','C'], data: 'zing' },
 }
 var keys = Object.keys(data).sort()
+var nodes = {}
 ;(function next (prev) {
   if (keys.length === 0) return
   var key = keys.shift()
-  log.add(prev, function (err, node) {
-    if (err) console.error(err)
-    else next(node.key)
+  var links = data[key].links.map(function (link) { return nodes[link] })
+  log.add(links, data[key].data, function (err, node) {
+    if (err) return console.error(err)
+    nodes[key] = node.key
+    next()
   })
 })(null)
