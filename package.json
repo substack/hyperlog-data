@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "hyperlog": "^4.7.0",
+    "collect-stream": "^1.1.1",
     "memdb": "^1.0.1",
     "tape": "^4.2.2"
   },
