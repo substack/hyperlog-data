@@ -6,7 +6,7 @@ var messages = require('hyperlog/lib/messages.js')
 var hyperlog = require('hyperlog')
 
 exports.save = function () {
-  return combine([ through.obj(write), lenpre() ])
+  return combine.obj([ through.obj(write), lenpre.encode() ])
 
   function write (row, enc, next) {
     try { var buf = messages.Node.encode(row) }
@@ -16,7 +16,7 @@ exports.save = function () {
 }
 
 exports.load = function () {
-  return combine([ lenpre(), through.obj(write) ])
+  return combine.obj([ lenpre.decode(), through.obj(write) ])
 
   function write (buf, enc, next) {
     try { var row = messages.Node.decode(buf) }
