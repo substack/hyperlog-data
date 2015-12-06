@@ -1,7 +1,6 @@
 var through = require('through2')
 var lenpre = require('length-prefixed-stream')
 var combine = require('stream-combiner2')
-
 var messages = require('hyperlog/lib/messages.js')
 
 exports.save = function () {

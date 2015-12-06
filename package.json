@@ -1,0 +1,26 @@
+{
+  "name": "hyperlog-data",
+  "version": "1.0.0",
+  "description": "serialize a hyperlog to a stream of bytes",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "hyperlog": "^4.7.0",
+    "memdb": "^1.0.1",
+    "tape": "^4.2.2"
+  },
+  "dependencies": {
+    "hyperlog": "^4.7.0",
+    "length-prefixed-stream": "^1.4.0",
+    "stream-combiner2": "^1.1.1",
+    "through2": "^2.0.0"
+  }
+}
