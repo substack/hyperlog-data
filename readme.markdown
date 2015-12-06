@@ -68,10 +68,11 @@ var hdata = require('hyperlog-data')
 Return a transform object `stream` that reads rows from a hyperlog's
 `createReadStream()` and outputs bytes.
 
-## var stream = hdata.load(log)
+## var stream = hdata.load(log, cb)
 
 Return a readable `stream` that reads bytes from an exported hyperlog and
-populates `log` with the data.
+populates `log` with the data. When the `log` is finished being written to,
+`cb(err)` fires.
 
 # install
 
