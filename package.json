@@ -4,14 +4,20 @@
   "description": "save/load a hyperlog to/from a stream of bytes",
   "main": "index.js",
   "directories": {
-    "example": "example"
+    "example": "example",
+    "test": "test"
   },
   "scripts": {
     "test": "tape test/*.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "hyperlog",
+    "serialize",
+    "disk",
+    "sneakernet"
+  ],
+  "author": "substack",
+  "license": "BSD",
   "devDependencies": {
     "collect-stream": "^1.1.1",
     "memdb": "^1.0.1",
@@ -23,5 +29,13 @@
     "readable-stream": "^2.0.4",
     "stream-combiner2": "^1.1.1",
     "through2": "^2.0.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/substack/hyperlog-data.git"
+  },
+  "bugs": {
+    "url": "https://github.com/substack/hyperlog-data/issues"
+  },
+  "homepage": "https://github.com/substack/hyperlog-data#readme"
 }
